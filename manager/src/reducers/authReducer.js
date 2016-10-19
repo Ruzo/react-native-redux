@@ -9,6 +9,14 @@ export default authReducer = (state={}, action) => {
     case types.PASSWORD_TEXT_CHANGED:
       return Object.assign({}, state, {password: action.payload});
 
+    case types.USER_LOGIN_SUCCESS:
+      console.log('Success! ', action.payload);
+      return Object.assign({}, state, {user: action.payload, password:'', error: '', loading: false});
+
+    case types.USER_LOGIN_FAIL:
+      console.log('Fail! ', action.payload);
+      return Object.assign({}, state, {password: '', error: action.payload, loading: false})
+
     default:
       return state;
   }
