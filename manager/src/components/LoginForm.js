@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text, ActivityIndicator} from 'react-native';
 import {Card, CardSection, Input, Button} from './common';
 import {connect} from 'react-redux';
-import {emailTextChanged, passwordTextChanged, loginRequest} from '../actions';
+import {emailTextChanged, passwordTextChanged, loginRequest, signupRequest} from '../actions';
 import {ButtonStyle} from './common/styles';
 import {LoginStyle} from './styles';
 
@@ -18,6 +18,11 @@ class LoginForm extends Component {
   loginButtonHandler(){
     const {email, password} = this.props;
     this.props.loginRequest(email, password);
+  }
+
+  signupButtonHandler(){
+    const {email, password} = this.props;
+    this.props.signupRequest(email, password);
   }
 
   render() {
@@ -43,9 +48,13 @@ class LoginForm extends Component {
           />
         </CardSection>
         <Text style={LoginStyle.errorText}>{error || ' '}</Text>
+        <ActivityIndicator animating={loading} size='small' />
         <CardSection>
-          <Button handler={this.loginButtonHandler.bind(this)} compStyle={ ButtonStyle.logInOut }>
+          <Button handler={this.loginButtonHandler.bind(this)} compStyle={ ButtonStyle.logInOut } disabled={loading}>
             <Text style={[ButtonStyle.logText, ButtonStyle.logInOutText]}>LOGIN</Text>
+          </Button>
+          <Button handler={this.signupButtonHandler.bind(this)} compStyle={ButtonStyle.signup} disabled={loading}>
+            <Text style={[ButtonStyle.logText, ButtonStyle.signupText]}>SIGNUP</Text>
           </Button>
         </CardSection>
         <Text>{user}</Text>
@@ -65,4 +74,4 @@ const mapStateToProps = ({auth}) => {
   }
 };
 
-export default connect(mapStateToProps, {emailTextChanged, passwordTextChanged, loginRequest})(LoginForm);
+export default connect(mapStateToProps, {emailTextChanged, passwordTextChanged, loginRequest, signupRequest})(LoginForm);
