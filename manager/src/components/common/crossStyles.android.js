@@ -5,3 +5,5 @@ export const headerShadow = {
 export const cardShadow = {
   elevation: 1
 }
+
+export const buttonBkgColor = '#ddd';

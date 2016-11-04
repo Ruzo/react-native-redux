@@ -10,3 +10,5 @@ export const cardShadow = {
     shadowOpacity: 0.1,
     shadowRadius: 2
 }
+
+export const buttonBkgColor = '#fff';

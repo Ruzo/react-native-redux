@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {headerShadow, cardShadow} from './crossStyles';
+import {headerShadow, cardShadow, buttonBkgColor} from './crossStyles';
 
 export const colors = {
   headerBkgr: '#f8f8f8',
@@ -8,9 +8,9 @@ export const colors = {
   cardShadow: '#000',
   cardSectBkgr: '#fff',
   buttonLogBorder: '#007aff',
-  buttonLogBkgr: '#fff',
+  buttonLogBkgr: buttonBkgColor,
   buttonSignupBorder: '#D1A61A',
-  buttonSignupBkgr: '#fff',
+  buttonSignupBkgr: buttonBkgColor,
   buttonTouchText: '#007aff',
   buttonSignupText: '#D1A61A',
   inputFieldText: '#000',

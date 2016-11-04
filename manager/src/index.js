@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
-import {Provider} from 'react-redux';
-import {View, Text} from 'react-native';
-import {createStore, applyMiddleware, compose} from 'redux';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { View, Text } from 'react-native';
+import { createStore, applyMiddleware, compose } from 'redux';
+import Router from './Router';
 import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
 import reducers from './reducers';
 import sagas from './sagas';
-import {Header} from './components/common';
-import LoginForm from './components/LoginForm';
 
 class App extends Component {
-  componentWillMount(){
+  componentWillMount() {
     firebase.initializeApp({
       apiKey: "AIzaSyC0awcyMoLOFweoilzkLeFaqPUYZ85AeG0",
       authDomain: "react-native-redux-course.firebaseapp.com",
@@ -20,7 +19,7 @@ class App extends Component {
     });
   }
 
-  render(){
+  render() {
     const initialState = {
       auth: {
         email: '',
@@ -37,12 +36,9 @@ class App extends Component {
     sagaMiddleware.run(sagas);
 
     return (
-      <Provider store={store}>
-        <View>
-          <Header headerText='MANAGER' />
-          <LoginForm />
-        </View>
-      </Provider>
+        <Provider store={store}>
+          <Router />
+        </Provider>
     );
   }
 }
