@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import React, {PropTypes} from 'react';
 import {TextInput, View, Text} from 'react-native';
 import {InputStyle, colors} from './styles';

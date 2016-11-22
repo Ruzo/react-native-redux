@@ -1,59 +1,76 @@
-import React, {Component} from 'react';
-import {Text, ActivityIndicator} from 'react-native';
-import {Card, CardSection, Input, Button} from './common';
-import {connect} from 'react-redux';
-import {emailTextChanged, passwordTextChanged, loginRequest, signupRequest} from '../actions';
-import {ButtonStyle} from './common/styles';
-import {LoginStyle} from './styles';
+import React, { Component, PropTypes } from 'react';
+import { Text, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
+import { Card, CardSection, Input, Button } from './common';
+import { textChanged, loginRequest, signupRequest } from '../actions';
+import { ButtonStyle } from './common/styles';
+import { LoginStyle } from './styles';
 
 class LoginForm extends Component {
-  onEmailChange(text){
-    this.props.emailTextChanged(text);
+  constructor() {
+    super();
+
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.onPasswordChange = this.onPasswordChange.bind(this);
+    this.loginButtonHandler = this.loginButtonHandler.bind(this);
+    this.signupButtonHandler = this.signupButtonHandler.bind(this);
   }
 
-  onPasswordChange(text){
-    this.props.passwordTextChanged(text);
+  onEmailChange(text) {
+    this.props.textChanged(this.props.reducerKey, 'email', text);
   }
 
-  loginButtonHandler(){
-    const {email, password} = this.props;
+  onPasswordChange(text) {
+    this.props.textChanged(this.props.reducerKey, 'password', text);
+  }
+
+  loginButtonHandler() {
+    const { email, password } = this.props;
     this.props.loginRequest(email, password);
   }
 
-  signupButtonHandler(){
-    const {email, password} = this.props;
+  signupButtonHandler() {
+    const { email, password } = this.props;
     this.props.signupRequest(email, password);
   }
 
   render() {
-    const {email, password, user, error, loading} = this.props;
+    const { email, password, user, error, loading } = this.props;
     return (
       <Card>
         <CardSection>
           <Input
-            label='Email'
-            placeholder='user@gmail.com'
+            label="Email"
+            placeholder="user@gmail.com"
             value={email}
-            onChangeText={this.onEmailChange.bind(this)}
-            keyboardType='email-address'
+            onChangeText={this.onEmailChange}
+            keyboardType="email-address"
           />
         </CardSection>
         <CardSection>
           <Input
-            label='Password'
-            placeholder='enter a password'
+            label="Password"
+            placeholder="enter a password"
             value={password}
-            onChangeText={this.onPasswordChange.bind(this)}
-            secure={true}
+            onChangeText={this.onPasswordChange}
+            secure
           />
         </CardSection>
         <Text style={LoginStyle.errorText}>{error || ' '}</Text>
-        <ActivityIndicator animating={loading} size='small' />
+        <ActivityIndicator animating={loading} size="small" />
         <CardSection>
-          <Button handler={this.loginButtonHandler.bind(this)} compStyle={ ButtonStyle.logInOut } disabled={loading}>
+          <Button
+            handler={this.loginButtonHandler}
+            compStyle={ButtonStyle.logInOut}
+            disabled={loading}
+          >
             <Text style={[ButtonStyle.logText, ButtonStyle.logInOutText]}>LOGIN</Text>
           </Button>
-          <Button handler={this.signupButtonHandler.bind(this)} compStyle={ButtonStyle.signup} disabled={loading}>
+          <Button
+            handler={this.signupButtonHandler}
+            compStyle={ButtonStyle.signup}
+            disabled={loading}
+          >
             <Text style={[ButtonStyle.logText, ButtonStyle.signupText]}>SIGNUP</Text>
           </Button>
         </CardSection>
@@ -63,15 +80,37 @@ class LoginForm extends Component {
   }
 }
 
-const mapStateToProps = ({auth}) => {
-  const {email, password, user, error, loading} = auth;
+LoginForm.propTypes = {
+  textChanged: PropTypes.func.isRequired,
+  loginRequest: PropTypes.func.isRequired,
+  signupRequest: PropTypes.func.isRequired,
+  reducerKey: PropTypes.string.isRequired,
+  email: PropTypes.string,
+  password: PropTypes.string,
+  user: PropTypes.string,
+  error: PropTypes.string,
+  loading: PropTypes.bool,
+};
+
+const mapStateToProps = ({ auth, server }) => {
+  const { email, password, user, error } = auth;
+  const { loading } = server;
+  const reducerKey = 'AUTH';
   return {
     email,
     password,
     error,
     loading,
-    user
-  }
+    user,
+    reducerKey,
+  };
 };
 
-export default connect(mapStateToProps, {emailTextChanged, passwordTextChanged, loginRequest, signupRequest})(LoginForm);
+export default connect(
+  mapStateToProps,
+  {
+    textChanged,
+    loginRequest,
+    signupRequest,
+  },
+)(LoginForm);

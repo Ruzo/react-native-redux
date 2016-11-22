@@ -1,11 +1,12 @@
-import React from 'react';
-import {View} from 'react-native';
-import {CardSectionStyle} from './styles';
+/* eslint-disable import/prefer-default-export */
 
-export const CardSection = ({children}) => {
-  return (
-    <View style={CardSectionStyle.container}>
+import React from 'react';
+import { View } from 'react-native';
+import { CardSectionStyle } from './styles';
+
+export const CardSection = ({ children, style }) =>
+  (
+    <View style={[CardSectionStyle.container, style]}>
       {children}
     </View>
   );
-};

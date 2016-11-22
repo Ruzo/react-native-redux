@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
 import {ButtonStyle} from './styles';
