@@ -5,8 +5,11 @@ import types from '../actions/types';
 import {
   signInUser,
   signUpUser,
-  getEmployeeRef,
+  getEmployeesRef,
+  getSelectedEmployeeRef,
   saveEmployee,
+  updateEmployee,
+  deleteEmployee,
   getEmployees,
   loadEmployeesListener,
 } from '../api';
@@ -40,23 +43,43 @@ function* userSignupRequest({ payload }) {
 
 function* employeeSave({ payload }) {
   yield put(actions.connectingToServer());
-  const employeeRef = yield call(getEmployeeRef);
-  yield call(saveEmployee, employeeRef, payload);
-  yield call(Actions.employees({ type: 'reset' }));
+  const employeesRef = yield call(getEmployeesRef);
+  yield call(saveEmployee, employeesRef, payload);
   yield put(actions.disconnectedFromServer());
+  yield put(actions.resetFields());
+  yield call(Actions.employees, { type: 'reset' });
+}
+
+function* employeeUpdate({ payload }) {
+  yield put(actions.connectingToServer());
+  const { id, name, phone, schedule } = payload;
+  const selectedEmployeeRef = yield call(getSelectedEmployeeRef, id);
+  yield call(updateEmployee, selectedEmployeeRef, { name, phone, schedule });
+  yield put(actions.disconnectedFromServer());
+  yield put(actions.resetFields());
+  yield call(Actions.employees, { type: 'reset' });
+}
+
+function* employeeDelete({ id }) {
+  yield put(actions.connectingToServer());
+  const selectedEmployeeRef = yield call(getSelectedEmployeeRef, id);
+  yield call(deleteEmployee, selectedEmployeeRef);
+  yield put(actions.disconnectedFromServer());
+  yield put(actions.resetFields());
+  yield call(Actions.employees, { type: 'reset' });
 }
 
 function* listenToEmployeesSetup({ action }) {
   yield put(actions.connectingToServer());
-  const employeeRef = yield call(getEmployeeRef);
-  yield call(loadEmployeesListener, employeeRef, action);
+  const employeesRef = yield call(getEmployeesRef);
+  yield call(loadEmployeesListener, employeesRef, action);
   yield put(actions.disconnectedFromServer());
 }
 
 function* getEmployeesList() {
   yield put(actions.connectingToServer());
-  const employeeRef = yield call(getEmployeeRef);
-  const list = yield call(getEmployees, employeeRef);
+  const employeesRef = yield call(getEmployeesRef);
+  const list = yield call(getEmployees, employeesRef);
   if (list) {
     yield put(actions.updateEmployeesList(list));
   }
@@ -69,7 +92,9 @@ export default function* () {
     takeLatest(types.USER_LOGIN_REQUEST, userLoginRequest),
     takeLatest(types.SIGNUP_USER_REQUEST, userSignupRequest),
     takeEvery(types.EMPLOYEE_SAVE, employeeSave),
+    takeEvery(types.EMPLOYEE_UPDATE, employeeUpdate),
     takeEvery(types.GET_EMPLOYEES_LIST, getEmployeesList),
     takeLatest(types.LISTEN_TO_EMPLOYEES, listenToEmployeesSetup),
+    takeLatest(types.EMPLOYEE_FIRE, employeeDelete),
   ];
 }

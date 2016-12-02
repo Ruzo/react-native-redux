@@ -1,17 +1,24 @@
-import update from 'immutability-helper';
 import types from '../actions/types';
 
-const pageReducer = (state = {}, { type, payload }) => {
+const initialState = {
+  name: '',
+  phone: '',
+};
+
+const pageReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+
     case types.PAGE_TEXT_CHANGED:
       return Object.assign({}, state, { [payload.field]: payload.text });
-    case types.PAGE_SCHEDULE_CHANGED:
-      return Object.assign({},
-        state,
-        {
-          schedule: update(state.schedule,
-            { $splice: [[payload.id, 1, payload.day]] }),
-        });
+
+    case types.UPDATE_FIELDS: {
+      const { name, phone } = payload;
+      return { name, phone };
+    }
+
+    case types.RESET_FIELDS:
+      return initialState;
+
     default:
       return state;
   }

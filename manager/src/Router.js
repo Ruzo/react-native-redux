@@ -20,7 +20,7 @@ const RouterComponent = () => (
         component={Employees}
         title="Employees"
         rightTitle="Add"
-        onRight={() => Actions.employeePage()}
+        onRight={() => Actions.employeePage({ employee: null })}
       />
       <Scene
         key="employeePage"

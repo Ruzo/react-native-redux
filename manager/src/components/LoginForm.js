@@ -74,7 +74,6 @@ class LoginForm extends Component {
             <Text style={[ButtonStyle.logText, ButtonStyle.signupText]}>SIGNUP</Text>
           </Button>
         </CardSection>
-        <Text>{user}</Text>
       </Card>
     );
   }

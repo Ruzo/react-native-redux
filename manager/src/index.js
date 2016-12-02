@@ -9,6 +9,7 @@ import Router from './Router';
 import reducers from './reducers';
 import sagas from './sagas';
 import { daysOfWork } from './settings';
+import { selectableDays } from './utils';
 
 class App extends Component {
   componentWillMount() {
@@ -33,8 +34,8 @@ class App extends Component {
       page: {
         name: '',
         phone: '',
-        schedule: daysOfWork.slice(0, 5),
       },
+      schedule: selectableDays(daysOfWork),
       server: {
         loading: false,
       },

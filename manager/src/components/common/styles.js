@@ -13,6 +13,9 @@ export const colors = {
   buttonSignupBkgr: buttonBkgColor,
   buttonTouchText: '#007aff',
   buttonSignupText: '#D1A61A',
+  buttonDeleteBorder: '#CE2B27',
+  buttonDeleteBkgr: '#fff',
+  buttonDeleteText: '#CE2B27',
   inputFieldText: '#000',
   inputPlaceholder: '#bbb',
 };
@@ -101,6 +104,13 @@ export const ButtonStyle = StyleSheet.create({
   },
   signUpText: {
     color: colors.buttonSignupText,
+  },
+  delete: {
+    backgroundColor: colors.buttonDeleteBkgr,
+    borderColor: colors.buttonDeleteBorder,
+  },
+  deleteText: {
+    color: colors.deleteText,
   },
   logButton: {
     flex: 1,

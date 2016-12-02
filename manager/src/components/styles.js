@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const colors = {
   headerBkgr: '#f8f8f8',
@@ -14,13 +14,50 @@ export const colors = {
   buttonSignupText: '#D1A61A',
   inputFieldText: '#000',
   inputPlaceholder: '#bbb',
-  errorTextColor: '#FC1E1E'
-}
+  errorTextColor: '#FC1E1E',
+  daySelectedBkg: '#4BFF33',
+  dayNotSelectedBkg: '#CCCEDB',
+  daySelectedText: '#494A4E',
+  dayNotSelectedText: '#85868E',
+};
 
 export const LoginStyle = StyleSheet.create({
   errorText: {
     color: colors.errorTextColor,
     fontSize: 14,
-    alignSelf: 'center'
-  }
-})
+    alignSelf: 'center',
+  },
+});
+
+export const EmployeesStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  row: {
+    flex: 1,
+    paddingTop: 5,
+    paddingBottom: 5,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.cardBorder,
+    backgroundColor: colors.cardSectBkgr,
+  },
+  text: {
+    fontSize: 24,
+  },
+});
+
+export const DaysSelectionStyle = StyleSheet.create({
+  daySelectedContainer: {
+    backgroundColor: colors.daySelectedBkg,
+  },
+  daySelectedText: {
+    color: colors.daySelectedText,
+  },
+  dayNotSelectedContainer: {
+    backgroundColor: colors.dayNotSelectedBkg,
+  },
+  dayNotSelectedText: {
+    color: colors.dayNotSelectedText,
+  },
+});

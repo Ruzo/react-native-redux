@@ -2,17 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { View, Text, TouchableWithoutFeedback, ListView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import { Card, CardSection } from './common';
 import * as actions from '../actions';
-import * as utils from '../utils';
-// import { CardSection } from './common';
-// import { ButtonStyle } from './common/styles';
+import { objectsToArray } from '../utils';
+import { EmployeesStyle } from './styles';
 
 class Employees extends Component {
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows(utils.employeesToArray(this.props.employees) || ['No employees.']),
+      dataSource: ds.cloneWithRows(objectsToArray(this.props.employees, 'id') || ['No employees.']),
     };
   }
 
@@ -22,23 +22,28 @@ class Employees extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(utils.employeesToArray(nextProps.employees)),
+      dataSource: this.state.dataSource.cloneWithRows(objectsToArray(nextProps.employees, 'id')),
     });
   }
 
   render() {
     return (
-      <ListView
-        enableEmptySections
-        dataSource={this.state.dataSource}
-        renderRow={employee => (
-          <TouchableWithoutFeedback onPress={() => Actions.employeePage({ employee })}>
-            <View>
-              <Text>{employee.name}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        )}
-      />
+      <Card style={{ flex: 1 }}>
+        <ListView
+          style={EmployeesStyle.container}
+          enableEmptySections
+          dataSource={this.state.dataSource}
+          renderRow={employee => (
+            <TouchableWithoutFeedback onPress={() => Actions.employeePage({ employee })}>
+              <View>
+                <CardSection>
+                  <Text style={EmployeesStyle.text}>{employee.value.name}</Text>
+                </CardSection>
+              </View>
+            </TouchableWithoutFeedback>
+          )}
+        />
+      </Card>
     );
   }
 }
