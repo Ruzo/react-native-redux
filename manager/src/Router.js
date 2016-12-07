@@ -4,6 +4,7 @@ import LoginForm from './components/LoginForm';
 import Employees from './components/Employees';
 import EmployeePage from './components/EmployeePage';
 import Popup from './components/common/Popup';
+import Spinner from './components/Spinner';
 import { RouterStyle } from './styles';
 
 const RouterComponent = () => (
@@ -35,6 +36,10 @@ const RouterComponent = () => (
       <Scene
         key="popup"
         component={Popup}
+        />
+      <Scene
+        key="spinner"
+        component={Spinner}
         />
     </Scene>
   </Router>

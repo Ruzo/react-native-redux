@@ -86,6 +86,14 @@ function* getEmployeesList() {
   yield put(actions.disconnectedFromServer());
 }
 
+function* showSpinner() {
+  yield call(Actions.spinner);
+}
+
+function* hideSpinner() {
+  yield call(Actions.refresh);
+}
+
 // Watchers
 export default function* () {
   yield [
@@ -96,5 +104,7 @@ export default function* () {
     takeEvery(types.GET_EMPLOYEES_LIST, getEmployeesList),
     takeLatest(types.LISTEN_TO_EMPLOYEES, listenToEmployeesSetup),
     takeLatest(types.EMPLOYEE_FIRE, employeeDelete),
+    takeLatest(types.CONNECTING_TO_SERVER, showSpinner),
+    takeEvery(types.DISCONNECTED_FROM_SERVER, hideSpinner),
   ];
 }
