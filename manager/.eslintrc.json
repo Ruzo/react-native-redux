@@ -12,7 +12,8 @@
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     // React Native includes images via require('../images/example.png')
     "global-require": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "react/jsx-closing-bracket-location": "off"
   },
   // Resolver for Platform-specific extensions
   "settings": {

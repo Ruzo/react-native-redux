@@ -28,7 +28,7 @@ class Employees extends Component {
 
   render() {
     return (
-      <Card style={{ flex: 1 }}>
+      <Card style={{ flex: 1, marginTop: 100 }}>
         <ListView
           style={EmployeesStyle.container}
           enableEmptySections

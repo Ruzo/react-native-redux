@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import DaysSelection from './DaysSelection';
 import { Card, CardSection, Input, Button } from './common';
 import * as actions from '../actions';
@@ -11,9 +12,15 @@ class EmployeePage extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      modalVisible: true,
+    };
+
     this.dayChangeHandler = this.dayChangeHandler.bind(this);
     this.saveButtonHandler = this.saveButtonHandler.bind(this);
     this.deleteButtonHandler = this.deleteButtonHandler.bind(this);
+    this.deleteEmployee = this.deleteEmployee.bind(this);
+    this.cancelDelete = this.cancelDelete.bind(this);
   }
 
   componentWillMount() {
@@ -39,22 +46,36 @@ class EmployeePage extends Component {
   }
 
   deleteButtonHandler() {
-    // TODO: Add confirmation modal
+    this.setState({ modalVisible: true });
+    Actions.popup({
+      message: `Delete ${this.props.employee.value.name}?`,
+      yesButtonText: 'Yes',
+      noButtonText: 'No',
+      yesButtonHandler: this.deleteEmployee,
+      visible: this.state.modalVisible,
+    });
+  }
+
+  deleteEmployee() {
     const { employee } = this.props;
     this.props.employeeDelete(employee.id);
+  }
+
+  cancelDelete() {
+    this.setState({ modalVisible: false });
   }
 
   render() {
     const { reducerKey, textChanged, name, phone, schedule, employee } = this.props;
     const scheduleList = objectsToArray(schedule, 'day').sort(sortByDays);
     return (
-      <Card>
+      <Card style={{ marginTop: 100 }}>
         <CardSection>
           <Input
             placeholder="Name"
             value={name}
             onChangeText={text => textChanged(reducerKey, 'name', text)}
-          />
+            />
         </CardSection>
         <CardSection>
           <Input
@@ -62,17 +83,17 @@ class EmployeePage extends Component {
             value={phone}
             keyboardType="phone-pad"
             onChangeText={text => textChanged(reducerKey, 'phone', text)}
-          />
+            />
         </CardSection>
         <DaysSelection
           days={scheduleList}
           dayChangeHandler={this.dayChangeHandler}
-        />
+          />
         <CardSection>
           <Button
             handler={this.saveButtonHandler}
             compStyle={[ButtonStyle.logButton, ButtonStyle.logInOut]}
-          >
+            >
             <Text style={[ButtonStyle.logText, ButtonStyle.logInOutText]}>Save</Text>
           </Button>
         </CardSection>
@@ -80,7 +101,7 @@ class EmployeePage extends Component {
           <Button
             handler={this.deleteButtonHandler}
             compStyle={[ButtonStyle.logButton, ButtonStyle.delete]}
-          >
+            >
             <Text style={[ButtonStyle.logText, ButtonStyle.deleteText]}>Fire</Text>
           </Button>
         </CardSection>}

@@ -1,7 +1,7 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const RouterStyle = StyleSheet.create({
   mainView: {
-    paddingTop: 85
-  }
+    paddingTop: 0,
+  },
 });

@@ -43,7 +43,7 @@ export const EmployeesStyle = StyleSheet.create({
     backgroundColor: colors.cardSectBkgr,
   },
   text: {
-    fontSize: 24,
+    fontSize: 20,
   },
 });
 
@@ -59,5 +59,11 @@ export const DaysSelectionStyle = StyleSheet.create({
   },
   dayNotSelectedText: {
     color: colors.dayNotSelectedText,
+  },
+});
+
+export const ConfirmationStyle = StyleSheet.create({
+  container: {
+    backgroundColor: '#000',
   },
 });

@@ -35,9 +35,9 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { email, password, user, error, loading } = this.props;
+    const { email, password, error, loading } = this.props;
     return (
-      <Card>
+      <Card style={{ marginTop: 100 }}>
         <CardSection>
           <Input
             label="Email"
