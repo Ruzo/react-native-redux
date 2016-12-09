@@ -19,26 +19,28 @@ function* userLoginRequest({ payload }) {
   yield put(actions.connectingToServer());
   const { email, password } = payload;
   const { user, error } = yield call(signInUser, email, password);
+  yield put(actions.disconnectedFromServer());
+  yield call(console.log, 'Actions: ', Actions);
   if (user) {
     yield put(actions.userLoginSuccess(user));
+    yield call(console.log, 'Yielding after login success');
     yield call(Actions.main);
   } else {
     yield put(actions.userLoginFail(error));
   }
-  yield put(actions.disconnectedFromServer());
 }
 
 function* userSignupRequest({ payload }) {
   yield put(actions.connectingToServer());
   const { email, password } = payload;
   const { user, error } = yield call(signUpUser, email, password);
+  yield put(actions.disconnectedFromServer());
   if (user) {
     yield put(actions.userSignupSuccess(user));
     yield call(Actions.main);
   } else {
     yield put(actions.userSignupFail(error));
   }
-  yield put(actions.disconnectedFromServer());
 }
 
 function* employeeSave({ payload }) {

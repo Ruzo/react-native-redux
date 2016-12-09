@@ -77,6 +77,6 @@ export const SpinnerStyle = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
 });

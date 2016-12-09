@@ -3,6 +3,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { Card, CardSection, Button } from './';
 import { ButtonStyle, PopupStyle } from './styles';
 
@@ -15,11 +16,17 @@ class Popup extends Component {
     };
 
     this.deleteConfirmed = this.deleteConfirmed.bind(this);
+    this.doNotDelete = this.doNotDelete.bind(this);
   }
 
   deleteConfirmed() {
     this.setState({ visible: false });
     this.props.yesButtonHandler();
+  }
+
+  doNotDelete() {
+    this.setState({ visible: false });
+    Actions.pop();
   }
 
   render() {
@@ -43,7 +50,7 @@ class Popup extends Component {
                 <Text style={[ButtonStyle.logText, ButtonStyle.logInOutText]}>{yesButtonText}</Text>
               </Button>
               <Button
-                handler={() => this.setState({ visible: false })}
+                handler={this.doNotDelete}
                 compStyle={[ButtonStyle.logButton, ButtonStyle.delete]}
                 >
                 <Text style={[ButtonStyle.logText, ButtonStyle.deleteText]}>{noButtonText}</Text>
